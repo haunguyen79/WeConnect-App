@@ -8,9 +8,10 @@ import { Link } from "react-router-dom";
 const RegisterPage = () => {
   const { control } = useForm();
   return (
-    <div className="bg-dark-200 flex justify-center items-center h-screen">
-      <div className="bg-white w-[450px] h-fit px-8 py-10">
+    <div className="bg-dark-200 flex h-screen items-center justify-center">
+      <div className="h-fit w-[450px] bg-white px-8 py-10">
         <img src="/weconnect-logo.png" className="mx-auto mb-6" />
+        <p className="mb-5 text-center text-2xl font-bold">Register</p>
         <form className="flex flex-col gap-4">
           <FormField
             name="fullName"
@@ -33,10 +34,12 @@ const RegisterPage = () => {
             type="password"
             Component={TextInput}
           />
-          <Button variant="contained" className="mt-4">Sign Up</Button>
+          <Button variant="contained" className="mt-4">
+            Sign Up
+          </Button>
         </form>
-        <p>
-          Already have an account? <Link to="/login">Sign in instead</Link>
+        <p className="text-center text-dark-100 mt-4">
+          Already have an account? <Link className="text-[#246AA3]" to="/login">Sign in instead</Link>
         </p>
       </div>
     </div>
