@@ -5,7 +5,7 @@ body {
 }
 
 @theme {
-  
-  --color-dark-100: #4B465C;
-  --color-dark-200: #F8F7FA;
-} 
+  --color-primary: #246aa3;
+  --color-dark-100: #4b465c;
+  --color-dark-200: #f8f7fa;
+}
