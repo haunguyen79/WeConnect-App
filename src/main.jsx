@@ -10,6 +10,7 @@ import theme from "./configs/muiConfig";
 import AuthLayout from "@pages/auth/AuthLayout";
 import RegisterPage from "@pages/auth/RegisterPage";
 import LoginPage from "@pages/auth/LoginPage";
+import OTPVerifyPage from "@pages/auth/OTPVerifyPage";
 
 const HomePage = lazy(() => import("@pages/HomePage"));
 
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
             path: "/login",
             element: <LoginPage />,
           },
+          {
+            path: "/verify-otp",
+            element: <OTPVerifyPage />,
+          }
         ],
       },
     ],

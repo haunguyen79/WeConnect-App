@@ -17,6 +17,7 @@
     "@mui/material": "^7.0.2",
     "@tailwindcss/vite": "^4.1.3",
     "lodash": "^4.17.21",
+    "mui-one-time-password-input": "^5.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.55.0",
