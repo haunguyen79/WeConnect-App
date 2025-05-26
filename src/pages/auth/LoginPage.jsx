@@ -1,12 +1,22 @@
 import FormField from "@components/FormField";
 import TextInput from "@components/FormInputs/TextInput";
 import { Button } from "@mui/material";
-import React from "react";
+import { login } from "@redux/slices/authSlice";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   const { control } = useForm();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(
+      login({ accessToken: "accessToken", refreshToken: "refreshToken" }),
+    );
+  }, []);
+
   return (
     <div>
       <p className="mb-5 text-center text-2xl font-bold">Login</p>
