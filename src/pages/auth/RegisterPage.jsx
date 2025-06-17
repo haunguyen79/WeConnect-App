@@ -7,13 +7,34 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const RegisterPage = () => {
-  const { control, handleSubmit } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [register, { data = {}, isLoading, error, isError, isSuccess }] =
     useRegisterMutation();
+
+  const formSchema = yup.object().shape({
+    fullName: yup.string().required(),
+    email: yup
+      .string()
+      .matches(
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        "Email is not valid",
+      )
+      .required("Email is required"),
+    password: yup.string().required(),
+  });
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(formSchema),
+  });
 
   function onSubmit(formData) {
     console.log({ formData });
@@ -26,7 +47,7 @@ const RegisterPage = () => {
     }
   }, [isSuccess, data.message, dispatch, navigate]);
 
-  console.log({ data, isLoading, error });
+  console.log({ data, isLoading, error, errors });
 
   return (
     <div>
@@ -37,6 +58,7 @@ const RegisterPage = () => {
           label="Full Name"
           control={control}
           Component={TextInput}
+          error={errors["fullName"]}
         />
 
         <FormField
@@ -44,6 +66,7 @@ const RegisterPage = () => {
           label="Email"
           control={control}
           Component={TextInput}
+          error={errors["email"]}
         />
 
         <FormField
@@ -52,6 +75,7 @@ const RegisterPage = () => {
           control={control}
           type="password"
           Component={TextInput}
+          error={errors["password"]}
         />
         <Button variant="contained" className="mt-4" type="submit">
           Sign Up
