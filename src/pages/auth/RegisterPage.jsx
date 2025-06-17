@@ -1,19 +1,30 @@
 import FormField from "@components/FormField";
 import TextInput from "@components/FormInputs/TextInput";
 import { Alert, Button } from "@mui/material";
+import { openSnackbar } from "@redux/slices/snackbarSlice";
 import { useRegisterMutation } from "@services/rootApi";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const { control, handleSubmit } = useForm();
-  const [register, { data, isLoading, error, isError }] = useRegisterMutation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [register, { data = {}, isLoading, error, isError, isSuccess }] =
+    useRegisterMutation();
 
   function onSubmit(formData) {
     console.log({ formData });
     register(formData);
   }
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(openSnackbar({ message: data.message })), navigate("/login");
+    }
+  }, [isSuccess, data.message, dispatch, navigate]);
 
   console.log({ data, isLoading, error });
 
@@ -51,7 +62,6 @@ const RegisterPage = () => {
             {error?.data?.message}{" "}
           </Alert>
         )}
-        
       </form>
       <p className="text-dark-100 mt-4 text-center">
         Already have an account?{" "}

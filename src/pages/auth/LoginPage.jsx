@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 const LoginPage = () => {
   const { control } = useForm();
 
-
   return (
     <div>
       <p className="mb-5 text-center text-2xl font-bold">Login</p>
@@ -33,7 +32,7 @@ const LoginPage = () => {
       </form>
       <p className="text-dark-100 mt-4 text-center">
         New on our platform?{" "}
-        <Link className="text-primary" to="/login">
+        <Link className="text-primary" to="/register">
           Create an account
         </Link>
       </p>
