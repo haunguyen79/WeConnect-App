@@ -24,7 +24,7 @@ const RegisterPage = () => {
         /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
         "Email is not valid",
       )
-      .required("Email is required"),
+      .required(),
     password: yup.string().required(),
   });
 

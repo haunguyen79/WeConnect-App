@@ -23,8 +23,10 @@ const RootLayout = () => {
 
       <Snackbar
         open={open}
-        autoHideDuration={5000}
-        onClose={() => dispatch(closeSnackbar)}
+        autoHideDuration={4000}
+        onClose={() => dispatch(closeSnackbar())} // gọi hàm => trả về action object
+        //Redux action creator là 1 function → phải gọi nó để nhận action object
+        //React Redux Toolkit (RTK) yêu cầu phải gọi hàm action creator, ngay cả khi không có payload
       >
         <Alert
           // onClose={handleClose}
