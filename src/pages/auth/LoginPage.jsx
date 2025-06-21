@@ -32,12 +32,15 @@ const LoginPage = () => {
     control,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm({ resolver: yupResolver(formSchema) });
 
   function onSubmit(formData) {
     console.log({ formData });
     login(formData);
   }
+
+  console.log({email: getValues("email")})
 
   useEffect(() => {
     if (isError && error?.data?.message) {
@@ -46,9 +49,13 @@ const LoginPage = () => {
 
     if (isSuccess && data?.message) {
       dispatch(openSnackbar({ message: data.message }));
-      navigate("/verify-otp");
+      navigate("/verify-otp", {
+        state: {
+          email: getValues("email"),
+        },
+      });
     }
-  }, [isSuccess, data.message, isError, error, dispatch, navigate]);
+  }, [isSuccess, data.message, isError, error, dispatch, navigate, getValues]);
 
   console.log({ data, isLoading, error, errors });
 
