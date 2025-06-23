@@ -1,10 +1,17 @@
 import { Button } from "@mui/material";
+import { useState } from "react";
 
 function HomePage() {
-  return <>
-     <p>HomePage</p>
-     <Button variant="contained">Login</Button>
-  </>;
+  const [count, setCount] = useState(0);
+
+  return (
+    <>
+      <p>HomePage</p>
+      <Button variant="contained" onClick={() => setCount(count + 1)}>
+        SUBMIT
+      </Button>
+    </>
+  );
 }
 
 export default HomePage;

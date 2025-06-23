@@ -7,12 +7,14 @@ import { lazy } from "react";
 import { ThemeProvider } from "@mui/material";
 
 import theme from "./configs/muiConfig";
+import ProtectedLayout from "@pages/ProtectedLayout";
 import AuthLayout from "@pages/auth/AuthLayout";
 import RegisterPage from "@pages/auth/RegisterPage";
 import LoginPage from "@pages/auth/LoginPage";
 import OTPVerifyPage from "@pages/auth/OTPVerifyPage";
 import { Provider } from "react-redux";
 import { store } from "@redux/store";
+import MessagePage from "@pages/auth/MessagePage";
 
 const HomePage = lazy(() => import("@pages/HomePage"));
 
@@ -21,8 +23,17 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       {
-        path: "/",
-        element: <HomePage />,
+        element: <ProtectedLayout />,
+        children: [
+          {
+            path: "/",
+            element: <HomePage />,
+          },
+          {
+            path: "/messages",
+            element: <MessagePage />,
+          }
+        ],
       },
       {
         element: <AuthLayout />,
@@ -38,7 +49,7 @@ const router = createBrowserRouter([
           {
             path: "/verify-otp",
             element: <OTPVerifyPage />,
-          }
+          },
         ],
       },
     ],
@@ -47,10 +58,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-  <ThemeProvider theme={theme}>
-    <ModalProvider>
-      <RouterProvider router={router} />
-    </ModalProvider>
-  </ThemeProvider>,
-  </Provider>
+    <ThemeProvider theme={theme}>
+      <ModalProvider>
+        <RouterProvider router={router} />
+      </ModalProvider>
+    </ThemeProvider>
+  </Provider>,
 );
