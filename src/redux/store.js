@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authReducer from "@redux/slices/authSlice";
 import snackbarReducer from "@redux/slices/snackbarSlice";
 import { rootApi } from "@services/rootApi";
-import storage from "redux-persist/lib/storage";
+import storage from "redux-persist/lib/storage"; //Local Storage
 
 import {
   persistReducer,
@@ -14,6 +14,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import { logOutMiddleware } from "./middlewares";
 
 const persistConfig = {
   key: "root",
@@ -38,7 +39,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(rootApi.middleware);
+    }).concat(logOutMiddleware, rootApi.middleware);
   },
 });
 

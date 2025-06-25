@@ -16,8 +16,11 @@ export const authSlice = createSlice({
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
     },
+    logOut: () =>{
+      return initialState; // Trả về trạng thái ban đầu khi đăng xuất
+    }
   },
 });
 
-export const { login } = authSlice.actions; // Trả ra tất cả các Action được khai báo trong reducer
+export const { login, logOut } = authSlice.actions; // Trả ra tất cả các Action được khai báo trong reducer
 export default authSlice.reducer;
