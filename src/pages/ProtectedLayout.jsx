@@ -1,11 +1,20 @@
+import { saveUserInfo } from "@redux/slices/authSlice";
 import { useGetAuthUserQuery } from "@services/rootApi";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Link, Navigate, Outlet } from "react-router-dom";
 
 const ProtectedLayout = () => {
+  const dispatch = useDispatch();
   const response = useGetAuthUserQuery();
   console.log({ response });
-  
+
+  useEffect(() => {
+    if (response.isSuccess) {
+      dispatch(saveUserInfo(response.data));
+    }
+  }, [dispatch, response.isSuccess, response.data]);
+
   if (response.isLoading) {
     return <div>Loading...</div>;
 
