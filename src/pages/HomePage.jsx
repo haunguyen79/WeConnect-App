@@ -7,6 +7,7 @@ function HomePage() {
   return (
     <>
       <p>HomePage</p>
+      <p>{count}</p>
       <Button variant="contained" onClick={() => setCount(count + 1)}>
         SUBMIT
       </Button>

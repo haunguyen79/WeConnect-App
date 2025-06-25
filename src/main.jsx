@@ -13,8 +13,9 @@ import RegisterPage from "@pages/auth/RegisterPage";
 import LoginPage from "@pages/auth/LoginPage";
 import OTPVerifyPage from "@pages/auth/OTPVerifyPage";
 import { Provider } from "react-redux";
-import { store } from "@redux/store";
+import { persistor, store } from "@redux/store";
 import MessagePage from "@pages/auth/MessagePage";
+import { PersistGate } from "redux-persist/integration/react";
 
 const HomePage = lazy(() => import("@pages/HomePage"));
 
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
           {
             path: "/messages",
             element: <MessagePage />,
-          }
+          },
         ],
       },
       {
@@ -58,10 +59,12 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <ModalProvider>
-        <RouterProvider router={router} />
-      </ModalProvider>
-    </ThemeProvider>
+    <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
+      <ThemeProvider theme={theme}>
+        <ModalProvider>
+          <RouterProvider router={router} />
+        </ModalProvider>
+      </ThemeProvider>
+    </PersistGate>
   </Provider>,
 );
