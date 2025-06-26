@@ -1,8 +1,9 @@
+import Header from "@components/Header";
 import { saveUserInfo } from "@redux/slices/authSlice";
 import { useGetAuthUserQuery } from "@services/rootApi";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Link, Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
 const ProtectedLayout = () => {
   const dispatch = useDispatch();
@@ -30,8 +31,7 @@ const ProtectedLayout = () => {
 
   return (
     <div>
-      <Link to="/">Home Page</Link>
-      <Link to="/messages">Messages Page</Link>
+      <Header />
       <Outlet />
     </div>
   );
