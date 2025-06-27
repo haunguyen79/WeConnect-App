@@ -1,6 +1,9 @@
+import { useLogout } from "@hooks/useLogout";
+import { useUserInfo } from "@hooks/useUserInfo";
 import { AccountCircle, Notifications, Search } from "@mui/icons-material";
 import {
   AppBar,
+  Avatar,
   Badge,
   IconButton,
   Menu,
@@ -12,6 +15,8 @@ import React, { useState } from "react";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const userInfo = useUserInfo();
+  const { logOut } = useLogout();
 
   const handleMenuClose = () => {
     setAnchorEl(null);
@@ -26,7 +31,7 @@ const Header = () => {
       anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
     >
       <MenuItem>Profile</MenuItem>
-      <MenuItem>Logout</MenuItem>
+      <MenuItem onClick={() => logOut()}>Logout</MenuItem>
     </Menu>
   );
 
@@ -56,13 +61,17 @@ const Header = () => {
 
           <div>
             <IconButton size="medium">
-              <Badge badgeContent={4} color="error" >
+              <Badge badgeContent={4} color="error">
                 <Notifications />
               </Badge>
             </IconButton>
 
             <IconButton size="medium" onClick={handleUserProfileClick}>
-              <AccountCircle />
+              {/* <AccountCircle /> */}
+
+              <Avatar className="!bg-primary">
+                {userInfo.fullName?.[0].toUpperCase()}
+              </Avatar>
             </IconButton>
           </div>
         </Toolbar>

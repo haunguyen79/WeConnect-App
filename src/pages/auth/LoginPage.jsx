@@ -33,14 +33,17 @@ const LoginPage = () => {
     handleSubmit,
     formState: { errors },
     getValues,
-  } = useForm({ resolver: yupResolver(formSchema) });
+  } = useForm({
+    resolver: yupResolver(formSchema),
+    defaultValues: { email: "", password: "" },
+  });
 
   function onSubmit(formData) {
     console.log({ formData });
     login(formData);
   }
 
-  console.log({email: getValues("email")})
+  console.log({ email: getValues("email") });
 
   useEffect(() => {
     if (isError && error?.data?.message) {
