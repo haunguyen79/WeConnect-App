@@ -1,17 +1,20 @@
-import { Button } from "@mui/material";
-import { useState } from "react";
+import FriendRequests from "@components/FriendRequests";
+import PostCreation from "@components/PostCreation";
+import PostList from "@components/PostList";
+import Sidebar from "@components/Sidebar";
 
 function HomePage() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <p>HomePage</p>
-      <p>{count}</p>
-      <Button variant="contained" onClick={() => setCount(count + 1)}>
-        SUBMIT
-      </Button>
-    </>
+    <div className="bg-dark-200 flex gap-4 p-6">
+      <Sidebar />
+      <div className="flex-1">
+        <PostCreation />
+        <PostList />
+      </div>
+      <div className="w-64">
+        <FriendRequests />
+      </div>
+    </div>
   );
 }
 
