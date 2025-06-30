@@ -1,7 +1,22 @@
 import styled from "@emotion/styled";
-import { Groups, Home, Lock, Message, People, Translate } from "@mui/icons-material";
-import { List, ListSubheader } from "@mui/material";
+import {
+  Groups,
+  Home,
+  Lock,
+  Message,
+  People,
+  Translate,
+} from "@mui/icons-material";
+import {
+  Drawer,
+  List,
+  ListSubheader,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { toggleDrawer } from "@redux/slices/settingsSlice";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const ListStyled = styled(List)`
@@ -10,9 +25,9 @@ const ListStyled = styled(List)`
   gap: 4px;
 `;
 
-const Sidebar = () => {
+const SidebarContent = () => {
   return (
-    <div className="w-64 flex flex-col gap-4">
+    <div className="flex w-64 flex-col gap-4">
       <ListStyled className="flex flex-col bg-white px-4 py-3 shadow">
         <Link to="/" className="flex items-center gap-1">
           <Home fontSize="small" />
@@ -31,15 +46,43 @@ const Sidebar = () => {
       </ListStyled>
 
       <ListStyled className="flex flex-col bg-white px-4 py-3 shadow">
-        <ListSubheader className="!p-0 !leading-none mb-2">Settings</ListSubheader>
+        <ListSubheader className="mb-2 !p-0 !leading-none">
+          Settings
+        </ListSubheader>
         <Link to="/setting/account" className="flex items-center gap-1">
-          <Lock fontSize="small"/> Account
+          <Lock fontSize="small" /> Account
         </Link>
         <Link to="/setting/languages" className="flex items-center gap-1">
-          <Translate fontSize="small"/> Languages
+          <Translate fontSize="small" /> Languages
         </Link>
       </ListStyled>
     </div>
+  );
+};
+
+const Sidebar = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme?.breakpoints?.down("sm"));
+  const isShowDrawer = useSelector((state) => state.settings.isShowDrawer);
+  const dispatch = useDispatch();
+
+  console.log({ isMobile });
+
+  return isMobile ? (
+    <Drawer
+      open={isShowDrawer}
+      onClose={() => dispatch(toggleDrawer())}
+      classes={{ paper: "p-4 flex flex-col gap-4 !bg-dark-200" }}
+    >
+      <div>
+        <Link to="/">
+          <img src="/weconnect-logo.png" className="h-8 w-8" />
+        </Link>
+      </div>
+      <SidebarContent />
+    </Drawer>
+  ) : (
+    <SidebarContent />
   );
 };
 
