@@ -1,6 +1,6 @@
+import { useMediaQuery, useTheme } from "@mui/material";
 import { logOut as logOutAction } from "@redux/slices/authSlice";
-import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export const useLogout = () => {
@@ -15,4 +15,15 @@ export const useLogout = () => {
   };
 
   return { logOut };
+};
+
+export const useUserInfo = () => {
+  return useSelector((state) => state.auth.userInfo);
+};
+
+export const useDetectLayout = () => {
+  const theme = useTheme();
+  const isMediumLayout = useMediaQuery(theme.breakpoints.down("md"));
+
+  return { isMediumLayout };
 };

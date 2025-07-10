@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { useDetectLayout } from "@hooks/index";
 import {
   Close,
   Groups,
@@ -13,8 +14,6 @@ import {
   IconButton,
   List,
   ListSubheader,
-  useMediaQuery,
-  useTheme,
 } from "@mui/material";
 import { toggleDrawer } from "@redux/slices/settingsSlice";
 import React from "react";
@@ -63,14 +62,13 @@ const SidebarContent = () => {
 };
 
 const Sidebar = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme?.breakpoints?.down("sm"));
+  const {isMediumLayout} = useDetectLayout()
   const isShowDrawer = useSelector((state) => state.settings.isShowDrawer);
   const dispatch = useDispatch();
 
-  console.log({ isMobile });
+  console.log({ isMediumLayout });
 
-  return isMobile ? (
+  return isMediumLayout ? (
     <Drawer
       open={isShowDrawer}
       onClose={() => dispatch(toggleDrawer())}
