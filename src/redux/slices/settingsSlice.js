@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isShowDrawer: true, // Trạng thái hiển thị của drawer
+  isShowDrawer: false, // Trạng thái hiển thị của drawer
 };
 
 export const settingsSlice = createSlice({

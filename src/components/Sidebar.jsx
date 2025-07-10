@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import {
+  Close,
   Groups,
   Home,
   Lock,
@@ -9,6 +10,7 @@ import {
 } from "@mui/icons-material";
 import {
   Drawer,
+  IconButton,
   List,
   ListSubheader,
   useMediaQuery,
@@ -74,10 +76,14 @@ const Sidebar = () => {
       onClose={() => dispatch(toggleDrawer())}
       classes={{ paper: "p-4 flex flex-col gap-4 !bg-dark-200" }}
     >
-      <div>
+      <div className="flex items-center justify-between">
         <Link to="/">
           <img src="/weconnect-logo.png" className="h-8 w-8" />
         </Link>
+
+        <IconButton onClick={() => dispatch(toggleDrawer())}>
+          <Close />
+        </IconButton>
       </div>
       <SidebarContent />
     </Drawer>
