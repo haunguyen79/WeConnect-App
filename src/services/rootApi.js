@@ -18,8 +18,8 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithForceLogout = async (args, api, extraOptions) => {
   const result = await baseQuery(args, api, extraOptions);
 
-  if(result?.error?.status === 401){
-    api.dispatch(logOut())
+  if (result?.error?.status === 401) {
+    api.dispatch(logOut());
     // await persistor.purge(); // Xoá/Loại bỏ đi toàn bộ dữ liệu đã lưu trong peristor
     window.location.href = "/login"; // Chuyển hướng về trang Login
   }
@@ -28,7 +28,7 @@ const baseQueryWithForceLogout = async (args, api, extraOptions) => {
 
 export const rootApi = createApi({
   reducerPath: "api",
-  baseQuery:baseQueryWithForceLogout,
+  baseQuery: baseQueryWithForceLogout,
   endpoints: (builder) => {
     return {
       register: builder.mutation({
@@ -64,6 +64,16 @@ export const rootApi = createApi({
       getAuthUser: builder.query({
         query: () => "/auth-user",
       }),
+
+      createPost: builder.mutation({
+        query: ({ content, image }) => {
+          return {
+            url: "/posts",
+            body: { content, image },
+            method: "POST",
+          };
+        },
+      }),
     };
   },
 });
@@ -73,4 +83,5 @@ export const {
   useLoginMutation,
   useVerifyOTPMutation,
   useGetAuthUserQuery,
+  useCreatePostMutation,
 } = rootApi;
