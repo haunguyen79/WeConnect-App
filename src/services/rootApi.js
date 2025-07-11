@@ -66,10 +66,10 @@ export const rootApi = createApi({
       }),
 
       createPost: builder.mutation({
-        query: ({ content, image }) => {
+        query: (formData) => {
           return {
             url: "/posts",
-            body: { content, image },
+            body: formData,
             method: "POST",
           };
         },

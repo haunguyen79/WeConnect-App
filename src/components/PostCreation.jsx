@@ -8,12 +8,12 @@ import {
   TextField,
 } from "@mui/material";
 import { openDialog } from "@redux/slices/dialogSlice";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch } from "react-redux";
 
-export const ImageUploader = () => {
-  const [image, setImage] = useState(null);
+export const ImageUploader = ({image, setImage}) => {
+  // const [image, setImage] = useState(null);
 
   const onDrop = useCallback((acceptedFiles) => {
     console.log({ acceptedFiles });
