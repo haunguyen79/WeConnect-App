@@ -7,7 +7,7 @@ function HomePage() {
   return (
     <div className="bg-dark-200 flex gap-4 p-6">
       <Sidebar />
-      <div className="flex-1">
+      <div className="flex-1 flex flex-col gap-4">
         <PostCreation />
         <PostList />
       </div>

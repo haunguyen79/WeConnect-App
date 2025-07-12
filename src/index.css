@@ -8,4 +8,12 @@ body {
   --color-primary: #246aa3;
   --color-dark-100: #4b465c;
   --color-dark-200: #f8f7fa;
+  --color-dark-300: #dbdade;
+  --color-dark-400: #909090;
+}
+
+@layer components {
+  .card {
+    @apply rounded bg-white p-4 shadow;
+  }
 }

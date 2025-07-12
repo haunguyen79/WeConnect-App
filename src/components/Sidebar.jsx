@@ -9,12 +9,7 @@ import {
   People,
   Translate,
 } from "@mui/icons-material";
-import {
-  Drawer,
-  IconButton,
-  List,
-  ListSubheader,
-} from "@mui/material";
+import { Drawer, IconButton, List, ListSubheader } from "@mui/material";
 import { toggleDrawer } from "@redux/slices/settingsSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,7 +24,7 @@ const ListStyled = styled(List)`
 const SidebarContent = () => {
   return (
     <div className="flex w-64 flex-col gap-4">
-      <ListStyled className="flex flex-col bg-white px-4 py-3 shadow">
+      <ListStyled className="card flex flex-col">
         <Link to="/" className="flex items-center gap-1">
           <Home fontSize="small" />
           New Feeds
@@ -46,7 +41,7 @@ const SidebarContent = () => {
         </Link>
       </ListStyled>
 
-      <ListStyled className="flex flex-col bg-white px-4 py-3 shadow">
+      <ListStyled className="card flex flex-col">
         <ListSubheader className="mb-2 !p-0 !leading-none">
           Settings
         </ListSubheader>
@@ -62,7 +57,7 @@ const SidebarContent = () => {
 };
 
 const Sidebar = () => {
-  const {isMediumLayout} = useDetectLayout()
+  const { isMediumLayout } = useDetectLayout();
   const isShowDrawer = useSelector((state) => state.settings.isShowDrawer);
   const dispatch = useDispatch();
 
