@@ -2,9 +2,7 @@ import { useUserInfo } from "@hooks/index";
 import {
   Avatar,
   Chip,
-  IconButton,
   Stack,
-  TextareaAutosize,
   TextField,
 } from "@mui/material";
 import { openDialog } from "@redux/slices/dialogSlice";

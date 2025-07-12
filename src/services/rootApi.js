@@ -1,5 +1,6 @@
-import { logOut } from "@redux/slices/authSlice";
+// import { logOut } from "@redux/slices/authSlice";
 // import { persistor } from "@redux/store";
+import { login, logOut } from "@redux/slices/authSlice";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
@@ -15,20 +16,61 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
-const baseQueryWithForceLogout = async (args, api, extraOptions) => {
-  const result = await baseQuery(args, api, extraOptions);
+const baseQueryWithReauth = async (args, api, extraOptions) => {
+  let result = await baseQuery(args, api, extraOptions);
 
-  if (result?.error?.status === 401) {
-    api.dispatch(logOut());
+  if (
+    result?.error?.status === 401 &&
+    result?.error?.data?.message === "Token has expired."
+  ) {
+    // Refresh token logic
+    const refreshToken = api.getState().auth.refreshToken;
+
+    if (refreshToken) {
+      const refreshResult = await baseQuery(
+        {
+          url: "/refresh-token",
+          method: "POST",
+          body: { refreshToken },
+        },
+        api,
+        extraOptions,
+      );
+
+      const newAccessToken = refreshResult?.data?.accessToken;
+
+      if (newAccessToken) {
+        api.dispatch(
+          login({
+            accessToken: newAccessToken,
+            refreshToken,
+          }),
+        );
+        
+        result = await baseQuery(args, api, extraOptions);
+      }else{
+        api.dispatch(logOut());
+        window.location.href = "/login"; 
+      }
+
+      console.log({ refreshResult });
+    }
+
+    /// api.dispatch(logOut());
     // await persistor.purge(); // Xoá/Loại bỏ đi toàn bộ dữ liệu đã lưu trong peristor
-    window.location.href = "/login"; // Chuyển hướng về trang Login
+    /// window.location.href = "/login"; // Chuyển hướng về trang Login
+
+    console.log({ result });
+
+    // alert("TOKEN EXPIRED!");
+
   }
   return result;
 };
 
 export const rootApi = createApi({
   reducerPath: "api",
-  baseQuery: baseQueryWithForceLogout,
+  baseQuery: baseQueryWithReauth,
   endpoints: (builder) => {
     return {
       register: builder.mutation({
@@ -61,6 +103,16 @@ export const rootApi = createApi({
         },
       }),
 
+      refreshToken: builder.mutation({
+        query: (refreshToken) => {
+          return {
+            url: "/refresh-token",
+            body: { refreshToken },
+            method: "POST",
+          };
+        },
+      }),
+
       getAuthUser: builder.query({
         query: () => "/auth-user",
       }),
@@ -84,4 +136,5 @@ export const {
   useVerifyOTPMutation,
   useGetAuthUserQuery,
   useCreatePostMutation,
+  useRefreshTokenMutation,
 } = rootApi;

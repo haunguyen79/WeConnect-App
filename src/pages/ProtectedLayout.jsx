@@ -25,9 +25,9 @@ const ProtectedLayout = () => {
      */
   }
 
-  if (!response?.data?._id) {
-    return <Navigate to="/login" />;
-  }
+  // if (!response?.data?._id) {
+  //   return <Navigate to="/login" />;
+  // }
 
   return (
     <div>
