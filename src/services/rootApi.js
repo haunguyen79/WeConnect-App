@@ -125,11 +125,14 @@ export const rootApi = createApi({
             method: "POST",
           };
         },
+        invalidatesTags: ['POSTS']
       }),
 
       getPosts: builder.query({
         query: () => "/posts",
+        providesTags: ['POSTS'],
       }),
+
     };
   },
 });
