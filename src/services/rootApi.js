@@ -126,6 +126,10 @@ export const rootApi = createApi({
           };
         },
       }),
+
+      getPosts: builder.query({
+        query: () => "/posts",
+      }),
     };
   },
 });
@@ -137,4 +141,5 @@ export const {
   useGetAuthUserQuery,
   useCreatePostMutation,
   useRefreshTokenMutation,
+  useGetPostsQuery,
 } = rootApi;

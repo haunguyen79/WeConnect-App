@@ -4,8 +4,8 @@ import dayjs from "dayjs";
 import React from "react";
 
 const Post = ({
-  fullName = "Hunter Nguyen",
-  createdAt = new Date(),
+  fullName,
+  createdAt,
   content,
   image,
   likes = [],
@@ -18,7 +18,7 @@ const Post = ({
         <div>
           <p className="font-bold">{fullName}</p>
           <p className="text-dark-400">
-            {dayjs(createdAt).format("DD/MM/YYYY")}
+            {dayjs(createdAt).format("DD/MM/YYYY HH:mm")}
           </p>
         </div>
       </div>
