@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 
 import { Suspense } from "react";
+import Loading from "@components/Loading";
 
 const AuthLayout = () => {
   return (
@@ -8,7 +9,7 @@ const AuthLayout = () => {
       <div className="h-fit w-[450px] bg-white px-8 py-10">
         <img src="/weconnect-logo.png" className="mx-auto mb-6" />
 
-        <Suspense fallback={<p>Loading</p>}>
+        <Suspense fallback={<Loading />}>
           <Outlet />
         </Suspense>
         

@@ -1,4 +1,5 @@
 import Header from "@components/Header";
+import Loading from "@components/Loading";
 import { saveUserInfo } from "@redux/slices/authSlice";
 import { useGetAuthUserQuery } from "@services/rootApi";
 import React, { useEffect } from "react";
@@ -17,7 +18,7 @@ const ProtectedLayout = () => {
   }, [dispatch, response.isSuccess, response.data]);
 
   if (response.isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
 
     /**
      * isLoading: No chi set thanh TRUE o lan Query dau tien

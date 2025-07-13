@@ -17,6 +17,7 @@ import { persistor, store } from "@redux/store";
 import MessagePage from "@pages/auth/MessagePage";
 import { PersistGate } from "redux-persist/integration/react";
 import Dialog from "@components/Dialog";
+import Loading from "@components/Loading";
 
 const HomePage = lazy(() => import("@pages/HomePage"));
 
@@ -60,7 +61,7 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
+    <PersistGate loading={<Loading />} persistor={persistor}>
       <ThemeProvider theme={theme}>
         {/* <ModalProvider> */}
         <RouterProvider router={router} />
