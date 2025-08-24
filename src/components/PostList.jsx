@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Post from "./Post";
 import { useGetPostsQuery } from "@services/rootApi";
 import Loading from "./Loading";
@@ -7,6 +7,7 @@ const PostList = () => {
   const [offset, setOffset] = useState(0);
   const limit = 10;
   const [posts, setPosts] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
 
   const { data, isSuccess, isFetching } = useGetPostsQuery({ offset, limit });
 
@@ -16,6 +17,11 @@ const PostList = () => {
 
   useEffect(() => {
     if (isSuccess && data && previousDataRef.current !== data) {
+      if (!data.length) {
+        setHasMore(false);
+        return;
+      }
+
       previousDataRef.current = data;
       console.log({ data, isSuccess });
 
@@ -25,16 +31,20 @@ const PostList = () => {
     }
   }, [data, isSuccess]);
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
+    if (!hasMore) {
+      return;
+    }
+
     const scrollTop = document.documentElement.scrollTop; // b
     const scrollHeight = document.documentElement.scrollHeight; // a
     const clientHeight = document.documentElement.clientHeight; // c
 
-    if (scrollTop + clientHeight + 50 >= scrollHeight) {
+    if (scrollTop + clientHeight + 50 >= scrollHeight && !isFetching) {
       console.log("SHOULD TRIGGER API");
       setOffset(offset + limit);
     }
-  };
+  }, [isFetching, hasMore, offset]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -42,11 +52,7 @@ const PostList = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
-
-  // if (isFetching) {
-  //   return <Loading />;
-  // }
+  }, [handleScroll]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -61,6 +67,8 @@ const PostList = () => {
           comments={post.comments}
         />
       ))}
+
+      {isFetching && <Loading />}
     </div>
   );
 };
