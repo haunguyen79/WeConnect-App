@@ -46,11 +46,11 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
             refreshToken,
           }),
         );
-        
+
         result = await baseQuery(args, api, extraOptions);
-      }else{
+      } else {
         api.dispatch(logOut());
-        window.location.href = "/login"; 
+        window.location.href = "/login";
       }
 
       console.log({ refreshResult });
@@ -63,7 +63,6 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     console.log({ result });
 
     // alert("TOKEN EXPIRED!");
-
   }
   return result;
 };
@@ -125,14 +124,19 @@ export const rootApi = createApi({
             method: "POST",
           };
         },
-        invalidatesTags: ['POSTS']
+        invalidatesTags: ["POSTS"],
       }),
 
       getPosts: builder.query({
-        query: () => "/posts",
-        providesTags: ['POSTS'],
+        query: ({ limit, offset } = {}) => {
+          return {
+            url: "/posts",
+            method: "GET",
+            params: { limit, offset },
+          };
+        },
+        providesTags: ["POSTS"],
       }),
-
     };
   },
 });
