@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Post from "./Post";
 import { useGetPostsQuery } from "@services/rootApi";
 import Loading from "./Loading";
+import { throttle } from "lodash";
 
 const PostList = () => {
   const [offset, setOffset] = useState(0);
@@ -31,26 +32,30 @@ const PostList = () => {
     }
   }, [data, isSuccess]);
 
-  const handleScroll = useCallback(() => {
-    if (!hasMore) {
-      return;
-    }
+  const handleScroll = useMemo(() => {
+    return throttle(() => {
+      console.log("SCROLLINGGG");
+      if (!hasMore) {
+        return;
+      }
 
-    const scrollTop = document.documentElement.scrollTop; // b
-    const scrollHeight = document.documentElement.scrollHeight; // a
-    const clientHeight = document.documentElement.clientHeight; // c
+      const scrollTop = document.documentElement.scrollTop; // b
+      const scrollHeight = document.documentElement.scrollHeight; // a
+      const clientHeight = document.documentElement.clientHeight; // c
 
-    if (scrollTop + clientHeight + 50 >= scrollHeight && !isFetching) {
-      console.log("SHOULD TRIGGER API");
-      setOffset(offset + limit);
-    }
-  }, [isFetching, hasMore, offset]);
+      if (scrollTop + clientHeight + 50 >= scrollHeight && !isFetching) {
+        console.log("SHOULD TRIGGER API");
+        setOffset((offset) => offset + limit);
+      }
+    }, 1000);
+  }, [isFetching, hasMore]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      handleScroll.cancel(); // Cancel any pending throttled calls
     };
   }, [handleScroll]);
 
