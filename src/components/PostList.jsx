@@ -1,63 +1,66 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React from "react";
 import Post from "./Post";
-import { useGetPostsQuery } from "@services/rootApi";
 import Loading from "./Loading";
-import { throttle } from "lodash";
+import { useLazyLoadPosts } from "@hooks/index";
 
 const PostList = () => {
-  const [offset, setOffset] = useState(0);
-  const limit = 10;
-  const [posts, setPosts] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
+  const { posts, isFetching } = useLazyLoadPosts();
 
-  const { data, isSuccess, isFetching } = useGetPostsQuery({ offset, limit });
+  // const [offset, setOffset] = useState(0);
+  // const limit = 10;
+  // const [posts, setPosts] = useState([]);
+  // const [hasMore, setHasMore] = useState(true);
 
-  const previousDataRef = useRef();
+  // const { data, isSuccess, isFetching } = useGetPostsQuery({ offset, limit });
 
-  console.log({ data });
+  // const previousDataRef = useRef();
 
-  useEffect(() => {
-    if (isSuccess && data && previousDataRef.current !== data) {
-      if (!data.length) {
-        setHasMore(false);
-        return;
-      }
+  // console.log({ data });
 
-      previousDataRef.current = data;
-      console.log({ data, isSuccess });
+  // useEffect(() => {
+  //   if (isSuccess && data && previousDataRef.current !== data) {
+  //     if (!data.length) {
+  //       setHasMore(false);
+  //       return;
+  //     }
 
-      setPosts((prevPosts) => {
-        return [...prevPosts, ...data];
-      });
-    }
-  }, [data, isSuccess]);
+  //     previousDataRef.current = data;
+  //     console.log({ data, isSuccess });
 
-  const handleScroll = useMemo(() => {
-    return throttle(() => {
-      console.log("SCROLLINGGG");
-      if (!hasMore) {
-        return;
-      }
+  //     setPosts((prevPosts) => {
+  //       return [...prevPosts, ...data];
+  //     });
+  //   }
+  // }, [data, isSuccess]);
 
-      const scrollTop = document.documentElement.scrollTop; // b
-      const scrollHeight = document.documentElement.scrollHeight; // a
-      const clientHeight = document.documentElement.clientHeight; // c
+  // const handleScroll = useMemo(() => {
+  //   return throttle(() => {
+  //     console.log("SCROLLINGGG");
 
-      if (scrollTop + clientHeight + 50 >= scrollHeight && !isFetching) {
-        console.log("SHOULD TRIGGER API");
-        setOffset((offset) => offset + limit);
-      }
-    }, 1000);
-  }, [isFetching, hasMore]);
+  //     if (!hasMore) {
+  //       return;
+  //     }
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+  //     const scrollTop = document.documentElement.scrollTop; // b
+  //     const scrollHeight = document.documentElement.scrollHeight; // a
+  //     const clientHeight = document.documentElement.clientHeight; // c
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      handleScroll.cancel(); // Cancel any pending throttled calls
-    };
-  }, [handleScroll]);
+  //     if (scrollTop + clientHeight + 50 >= scrollHeight && !isFetching) {
+  //       console.log("SHOULD TRIGGER API");
+  //       // setOffset((offset) => offset + limit);
+  //       loadMore();
+  //     }
+  //   }, 1000);
+  // }, [isFetching, hasMore, loadMore]);
+
+  // useEffect(() => {
+  //   window.addEventListener("scroll", handleScroll);
+
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //     handleScroll.cancel(); // Cancel any pending throttled calls
+  //   };
+  // }, [handleScroll]);
 
   return (
     <div className="flex flex-col gap-4">
