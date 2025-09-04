@@ -13,14 +13,17 @@ import {
 import { toggleDrawer } from "@redux/slices/settingsSlice";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const userInfo = useUserInfo();
   const { logOut } = useLogout();
   const { isMediumLayout } = useDetectLayout();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleMenuClose = () => {
     setAnchorEl(null);
@@ -65,6 +68,16 @@ const Header = () => {
                   slotProps={{
                     input: { className: "h-10 px-3 py-2" },
                     htmlInput: { className: "!p-0" },
+                  }}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      navigate("/search/users"),
+                        {
+                          state: { searchTerm },
+                        };
+                    }
                   }}
                   sx={{ ".MuiInputBase-root::before": { display: "none" } }}
                 />

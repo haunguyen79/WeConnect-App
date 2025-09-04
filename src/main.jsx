@@ -14,10 +14,11 @@ import LoginPage from "@pages/auth/LoginPage";
 import OTPVerifyPage from "@pages/auth/OTPVerifyPage";
 import { Provider } from "react-redux";
 import { persistor, store } from "@redux/store";
-import MessagePage from "@pages/auth/MessagePage";
+import MessagePage from "@pages/MessagePage";
 import { PersistGate } from "redux-persist/integration/react";
 import Dialog from "@components/Dialog";
 import Loading from "@components/Loading";
+import SearchUsersPage from "@pages/SearchUsersPage";
 
 const HomePage = lazy(() => import("@pages/HomePage"));
 
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
           {
             path: "/messages",
             element: <MessagePage />,
+          },
+          {
+            path: "/search/users",
+            element: <SearchUsersPage />,
           },
         ],
       },
