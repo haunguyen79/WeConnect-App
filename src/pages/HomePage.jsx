@@ -5,13 +5,18 @@ import Sidebar from "@components/Sidebar";
 
 function HomePage() {
   return (
-    <div className="bg-dark-200 flex gap-4 p-6">
+    <div className="app-container">
+      {/* Sidebar bên trái */}
       <Sidebar />
-      <div className="flex-1 flex flex-col gap-4">
+
+      {/* Nội dung chính */}
+      <div className="flex flex-1 flex-col gap-4">
         <PostCreation />
         <PostList />
       </div>
-      <div className="w-64 hidden sm:block">
+
+      {/* Friend requests bên phải */}
+      <div className="hidden w-72 sm:block">
         <FriendRequests />
       </div>
     </div>

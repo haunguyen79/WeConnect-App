@@ -16,4 +16,8 @@ body {
   .card {
     @apply rounded bg-white p-4 shadow;
   }
+
+  .app-container {
+    @apply mx-auto flex max-w-6xl gap-4 p-6;
+  }
 }

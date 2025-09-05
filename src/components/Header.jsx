@@ -48,8 +48,8 @@ const Header = () => {
 
   return (
     <div>
-      <AppBar color="white" position="static" className="py-4">
-        <Toolbar className="!min-h-fit justify-between">
+      <AppBar color="white" position="static">
+        <Toolbar className="app-container !min-h-fit w-full justify-between">
           {isMediumLayout ? (
             <IconButton onClick={() => dispatch(toggleDrawer())}>
               <MenuIcon />
