@@ -4,6 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const UserCard = ({ isFriend, fullName }) => {
+  
   return (
     <div className="card flex flex-col items-center">
       <Avatar className="!bg-primary mb-3 !h-12 !w-12">

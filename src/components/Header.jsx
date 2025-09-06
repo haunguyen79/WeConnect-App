@@ -73,10 +73,11 @@ const Header = () => {
                   onChange={(e) => setSearchTerm(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
-                      navigate("/search/users"),
-                        {
-                          state: { searchTerm },
-                        };
+                      navigate("/search/users", {
+                        state: {
+                          searchTerm,
+                        },
+                      });
                     }
                   }}
                   sx={{ ".MuiInputBase-root::before": { display: "none" } }}

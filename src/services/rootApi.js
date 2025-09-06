@@ -136,26 +136,22 @@ export const rootApi = createApi({
             params: { limit, offset },
           };
         },
-        providesTags: ["POSTS"],
+        providesTags: [{ type: "POSTS" }],
       }),
 
       searchUsers: builder.query({
         query: ({ limit, offset, searchQuery } = {}) => {
           const encodedQuery = encodeURIComponent(searchQuery.trim());
-
           return {
             url: `/search/users/${encodedQuery}`,
-            // method: "GET",
+            // method: 'GET',
             params: { limit, offset },
           };
         },
         providesTags: (result) =>
           result
             ? [
-                ...result.users.map(({ _id }) => ({
-                  type: "USERS",
-                  id: _id,
-                })),
+                ...result.users.map(({ _id }) => ({ type: "USERS", id: _id })),
                 { type: "USERS", id: "LIST" },
               ]
             : [{ type: "USERS", id: "LIST" }],
@@ -172,4 +168,5 @@ export const {
   useCreatePostMutation,
   useRefreshTokenMutation,
   useGetPostsQuery,
+  useSearchUsersQuery,
 } = rootApi;
