@@ -30,8 +30,9 @@ const SearchUsersPage = () => {
         {(data?.users || []).map((user) => (
           <UserCard
             key={user._id}
+            id={user._id}
             fullName={user.fullName}
-            isFriend={user.friends}
+            isFriend={user.isFriend}
             requestSent={user.requestSent}
             requestReceived={user.requestReceived}
           />

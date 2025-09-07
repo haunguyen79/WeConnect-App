@@ -182,4 +182,5 @@ export const {
   useRefreshTokenMutation,
   useGetPostsQuery,
   useSearchUsersQuery,
+  useSendFriendRequestMutation,
 } = rootApi;
