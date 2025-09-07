@@ -156,6 +156,19 @@ export const rootApi = createApi({
               ]
             : [{ type: "USERS", id: "LIST" }],
       }),
+
+      sendFriendRequest: builder.mutation({
+        query: (userId) => {
+          return {
+            url: "/friends/request",
+            method: "POST",
+            body: {
+              friendId: userId,
+            },
+          };
+        },
+        invalidatesTags: (result, error, args) => [{ type: "USERS", id: args }],
+      }),
     };
   },
 });

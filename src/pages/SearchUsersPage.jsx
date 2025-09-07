@@ -31,7 +31,9 @@ const SearchUsersPage = () => {
           <UserCard
             key={user._id}
             fullName={user.fullName}
-            isFriend={user.friends.includes(_id)}
+            isFriend={user.friends}
+            requestSent={user.requestSent}
+            requestReceived={user.requestReceived}
           />
         ))}
       </div>
