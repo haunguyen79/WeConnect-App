@@ -169,6 +169,20 @@ export const rootApi = createApi({
         },
         invalidatesTags: (result, error, args) => [{ type: "USERS", id: args }],
       }),
+
+      getPendingFriendRequests: builder.query({
+        query: () => "/friends/pending",
+        providesTags: (result) =>
+          result
+            ? [
+                ...result.map(({ _id }) => ({
+                  type: "PENDING_FRIEND_REQUESTS",
+                  id: _id,
+                })),
+                { type: "PENDING_FRIEND_REQUESTS", id: "LIST" },
+              ]
+            : [{ type: "PENDING_FRIEND_REQUESTS", id: "LIST" }],
+      }),
     };
   },
 });
@@ -183,4 +197,5 @@ export const {
   useGetPostsQuery,
   useSearchUsersQuery,
   useSendFriendRequestMutation,
+  useGetPendingFriendRequestsQuery,
 } = rootApi;
